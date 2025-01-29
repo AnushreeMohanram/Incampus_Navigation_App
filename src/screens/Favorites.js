@@ -6,7 +6,7 @@ const Favorites = ({ navigation }) => {
   const [places, setPlaces] = useState([
     { id: '1', name: 'Library', isFavorite: true, latitude: 9.882744, longitude: 78.081243 },
     { id: '2', name: 'Main Building', isFavorite: true, latitude: 9.882909, longitude: 78.082512 },
-    { id: '3', name: 'Cafeteria', isFavorite: false, latitude: 9.883112, longitude: 78.083412 },
+    { id: '3', name: 'Food Court', isFavorite: false, latitude: 9.883112, longitude: 78.083412 },
   ]);
 
   const toggleFavorite = (id) => {

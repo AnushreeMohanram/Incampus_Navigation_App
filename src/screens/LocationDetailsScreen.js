@@ -129,13 +129,80 @@ const campusLocations = [
     type: 'departments',
     description: 'Science Block housing multiple science-related departments.',
     hours: '9am - 6pm'
-  }
+  },
+  { 
+    id: 15, 
+    name: 'Main Building', 
+    latitude: 9.882909126295969, 
+    longitude: 78.08251234664523,
+    image: require('../../assets/mainbuilding.jpeg'), 
+    description: 'The main academic building',
+    hours: '9am - 5pm',
+  },
+  { 
+    id: 16, 
+    name: 'Library', 
+    latitude: 9.882744070560484, 
+    longitude: 78.0812433648733,
+    image: require('../../assets/library.jpeg'), 
+    description: 'Central library of the campus',
+    hours: '8am - 8pm',
+  },
+  { 
+    id: 17, 
+    name: 'Food Court', 
+    latitude: 9.883353073355941, 
+    longitude: 78.08324716419759,
+    image: require('../../assets/foodcourt.jpeg'), 
+    description: 'Food court with various cuisines',
+    hours: '9am - 5pm',
+  },
+  { 
+    id: 18, 
+    name: 'CSE Department', 
+    latitude: 9.882886,
+    longitude: 78.083664,
+    description: 'Department of Computer Science and Engineering',
+    hours: '9am - 5pm',
+  },
+  {
+    id: 19,
+    name: 'Civil Department',
+    latitude: 9.882239492713243,
+    longitude: 78.0832000805217,
+    type: 'departments',
+    description: 'Civil Department',
+    hours: '9am - 6pm'
+  },
+  {
+    id: 20,
+    name: 'Civil Department',
+    latitude: 9.882239492713243,
+    longitude: 78.0832000805217,
+    type: 'departments',
+    description: 'Civil Department',
+    hours: '9am - 6pm'
+  },
+  
 ];
+
+const LocationDetails = ({ route }) => {
+  const { locationId } = route.params;  // Access the passed locationId
+
+  // Use the locationId to fetch data or render details
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Location Details</Text>
+      <Text style={styles.detail}>Location ID: {locationId}</Text>
+      {/* Render other details based on locationId */}
+    </View>
+  );
+};
 
 const LocationDetailsScreen = ({ route }) => {
   // Retrieve the locationId passed through the route
   const { locationId } = route.params;
-
+  console.log(locationId); 
   // Find the location based on the passed ID
   const location = campusLocations.find(loc => loc.id === locationId);
 
@@ -147,6 +214,7 @@ const LocationDetailsScreen = ({ route }) => {
       </View>
     );
   }
+
 
   const openMap = () => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`;

@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -6,11 +5,7 @@ import 'react-native-gesture-handler';
 import { View, Text } from 'react-native'; 
 import * as FileSystem from 'expo-file-system'; // Import expo-file-system to create the directory
 import * as Notifications from 'expo-notifications'; // Import expo-notifications
-
 import DrawerNavigation from './src/navigation/DrawerNavigation'; // Correct path
-import React, { useState } from 'react';
-
-
 import LoginScreen from './src/screens/LoginScreen';
 import StudentOrFacultyScreen from './src/screens/StudentOrFacultyScreen';
 import ParentOrVisitorScreen from './src/screens/ParentOrVisitorScreen';
@@ -22,8 +17,8 @@ import WashroomScreen from './src/screens/WashroomScreen';
 import FemaleWashroomScreen from './src/screens/FemaleWashroomScreen';
 import MaleWashroomScreen from './src/screens/MaleWashroomScreen';
 import WashroomDetailsScreen from './src/screens/WashroomDetailsScreen';
-import LocationNotifications from './src/screens/LocationNotifications';
 import Favorites from './src/screens/Favorites';
+import Classroom from './src/screens/Classroom';
 
 const Stack = createStackNavigator();
 
@@ -93,10 +88,16 @@ const App = () => {
         {/* Washroom Details Screen */}
         <Stack.Screen name="WashroomDetails" component={WashroomDetailsScreen} options={{ title: 'Washroom Details' }} />
 
-        {/* Other Stack Screens */}
-        <Stack.Screen name="CampusMap" component={CampusMapScreen} options={{ title: 'Campus Map' }} />
-        <Stack.Screen name="LocationDetails" component={LocationDetailsScreen} options={{ title: 'Location Details' }} />
+        {/* Campus Map Screen */}
+        <Stack.Screen 
+          name="CampusMap" 
+          component={CampusMapScreen} 
+          options={{ title: 'Campus Map' }} 
+        />
 
+        {/* Location Details Screen */}
+        <Stack.Screen name="LocationDetails" component={LocationDetailsScreen} options={{ title: 'Location Details' }} />
+        <Stack.Screen name="Classroom" component={Classroom} />
         {/* Turn-by-Turn Notification Screen */}
         <Stack.Screen 
           name="TurnByTurnNotification" 
@@ -104,17 +105,8 @@ const App = () => {
           options={{ title: 'Turn-by-Turn Notifications' }} 
         />
 
-        <Stack.Screen name="Favorites">
-          {(props) => <Favorites {...props} recentlyVisited={recentlyVisited} />}
-        </Stack.Screen>
-        <Stack.Screen name="HomeDrawer" component={DrawerNavigation} options={{ headerShown: false }} />
-        <Stack.Screen name="CampusMap">
-          {(props) => (
-            <CampusMapScreen {...props} addVisitedLocation={addVisitedLocation} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="LocationDetails" component={LocationDetailsScreen} />
-        <Stack.Screen name="LocationNotifications" component={LocationNotifications} />
+        {/* Favorites Screen */}
+        <Stack.Screen name="Favorites" component={Favorites} />
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -9,26 +9,23 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "platforms": ["ios", "android"]
     },
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-
         "NSLocationWhenInUseUsageDescription": "This app uses your location to send notifications and provide navigation assistance.",
         "NSLocationAlwaysUsageDescription": "This app needs continuous access to your location for sending notifications about nearby locations and navigation updates.",
         "UIBackgroundModes": ["location", "fetch"]
       },
       "bundleIdentifier": "com.example.InCampusNavigationApp"
     },
-    
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-
         "backgroundColor": "#ffffff"
       },
-      
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
@@ -36,28 +33,24 @@
         "FOREGROUND_SERVICE",
         "NOTIFICATIONS"
       ],
-      "package": "com.example.InCampusNavigationApp",
-      "useNextNotificationsApi": true
+      "package": "com.example.InCampusNavigationApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    
     "plugins": [
       [
         "expo-notifications",
         {
-          "icon": "./assets/notification-icon.png",
-          "color": "#ffffff",
-          "mode": "production"
+          "skipNativeModifications": true
         }
       ]
     ],
     "extra": {
       "eas": {
-        "projectId": "your-eas-project-id"
+        "projectId": "235568ed-c1c9-41b9-90ac-dec760f4d191"
       }
-    }
-
+    },
+    "owner": "anushreemohanram"
   }
 }

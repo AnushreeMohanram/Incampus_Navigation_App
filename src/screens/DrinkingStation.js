@@ -22,7 +22,7 @@ const DrinkingStation = () => {
         }),
       ]),
       {
-        iterations: 1, // Run the animation 3 times
+        iterations: 1, // Run the animation once
       }
     ).start(() => {
       setShowButton(true); // Show the button after animation completes
