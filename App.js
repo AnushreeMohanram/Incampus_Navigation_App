@@ -2,9 +2,6 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler'; 
-import { View, Text } from 'react-native'; 
-import * as FileSystem from 'expo-file-system'; // Import expo-file-system to create the directory
-import * as Notifications from 'expo-notifications'; // Import expo-notifications
 import DrawerNavigation from './src/navigation/DrawerNavigation'; // Correct path
 import LoginScreen from './src/screens/LoginScreen';
 import StudentOrFacultyScreen from './src/screens/StudentOrFacultyScreen';
@@ -22,42 +19,51 @@ import Classroom from './src/screens/Classroom';
 
 const Stack = createStackNavigator();
 
-// Define the path where map tiles will be saved
-const tileDirectory = FileSystem.documentDirectory + 'tiles/';
-
-const createTileFolder = async () => {
-  try {
-    // Create the directory to store map tiles
-    await FileSystem.makeDirectoryAsync(tileDirectory, { intermediates: true });
-    console.log('Tile folder created!');
-  } catch (e) {
-    console.log('Tile folder already exists or failed to create');
-  }
-};
-
 const App = () => {
   useEffect(() => {
-    // Call the function to create the tile folder when the app is loaded
-    createTileFolder();
+    let isMounted = true;
 
-    // Set up notification handler
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-      }),
-    });
+    const initAsync = async () => {
+      // Delay native module access until the runtime is fully ready.
+      await Promise.resolve();
+      if (!isMounted) return;
 
-    // Request permission for notifications (optional, but recommended for background notifications)
-    const requestNotificationPermissions = async () => {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Notification permissions not granted!');
+      try {
+        const FileSystem = await import('expo-file-system');
+        const baseDir = FileSystem.documentDirectory ?? FileSystem.cacheDirectory;
+        if (baseDir) {
+          const tileDirectory = `${baseDir}tiles/`;
+          await FileSystem.makeDirectoryAsync(tileDirectory, { intermediates: true });
+        }
+      } catch (_e) {
+        // Best-effort: tile caching shouldn't block app boot.
+      }
+
+      try {
+        const Notifications = await import('expo-notifications');
+
+        Notifications.setNotificationHandler({
+          handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+          }),
+        });
+
+        const { status } = await Notifications.requestPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Notification permissions not granted!');
+        }
+      } catch (_e) {
+        // Expo Go / platform limitations: don't crash app.
       }
     };
 
-    requestNotificationPermissions();
+    initAsync();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
